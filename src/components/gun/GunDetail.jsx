@@ -35,18 +35,15 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
     e.preventDefault()
     setReviewError('')
     setReviewSuccess('')
-
     if (rating < 1 || rating > 5) {
       setReviewError('Rating must be between 1 and 5.')
       return
     }
-
     const result = await createReview(gun.id, {
       user_identifier: getUserIdentifier(),
       rating,
       comment: comment.trim(),
     })
-
     if (result) {
       setReviewSuccess('Review submitted!')
       setComment('')
@@ -74,14 +71,12 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
             {caliber ? ` · ${caliber}` : ''}
           </p>
           <p className="price detail-price">{formatPrice(price)}</p>
-
           {avgRating > 0 && (
             <p className="detail-rating">
               <Star size={16} fill="var(--brass)" stroke="var(--brass)" />
               {avgRating.toFixed(1)} ({reviewCount} review{reviewCount !== 1 ? 's' : ''})
             </p>
           )}
-
           <div className="detail-actions">
             <FavoriteButton gunId={gun.id || gun.name} />
             {onEdit && (
@@ -134,7 +129,6 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
       {/* Reviews Section */}
       <section className="detail-section">
         <h2>Reviews</h2>
-
         {/* Submit review */}
         <form className="review-form" onSubmit={handleSubmitReview}>
           <div className="review-stars">
@@ -154,7 +148,6 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
               </button>
             ))}
           </div>
-
           <textarea
             className="review-input"
             rows="3"
@@ -163,7 +156,6 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
             onChange={(e) => setComment(e.target.value)}
             maxLength={500}
           />
-
           <button
             type="submit"
             className="btn btn--primary"
@@ -175,7 +167,6 @@ export default function GunDetail({ gun, onBack, onEdit, onDelete }) {
               <><Send size={16} /> Submit Review</>
             )}
           </button>
-
           {reviewError && <p className="form-error">{reviewError}</p>}
           {reviewSuccess && <p className="form-success">{reviewSuccess}</p>}
           {!gun.id && (

@@ -32,42 +32,42 @@ export default function GunCard({ gun, onSelect, onEdit, onDelete }) {
           height="180"
           loading="lazy"
         />
-
         <span className="name display">{gun.name}</span>
-
         <span className="type">
           {category}
           {caliber ? ` · ${caliber}` : ''}
         </span>
-
         {gun.description && (
           <span className="card-desc">{truncate(gun.description, 72)}</span>
         )}
-
         <span className="price">{formatPrice(price)}</span>
       </button>
 
       {/* Floating actions row */}
       <div className="card-actions">
         <FavoriteButton gunId={gun.id || gun.name} />
-
         {onEdit && (
           <button
             type="button"
             className="card-act-btn"
-            onClick={(e) => { e.stopPropagation(); onEdit(gun) }}
+            onClick={(e) => {
+              e.stopPropagation()
+              onEdit(gun)
+            }}
             aria-label={`Edit ${gun.name}`}
             title="Edit"
           >
             ✏️
           </button>
         )}
-
         {onDelete && (
           <button
             type="button"
             className="card-act-btn card-act-btn--danger"
-            onClick={(e) => { e.stopPropagation(); onDelete(gun) }}
+            onClick={(e) => {
+              e.stopPropagation()
+              onDelete(gun)
+            }}
             aria-label={`Delete ${gun.name}`}
             title="Delete"
           >

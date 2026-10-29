@@ -73,7 +73,7 @@ export const extractCategories = (items) => {
 
 /**
  * Compute average rating from an array of review objects that each have a
- * numeric `rating` property.  Returns 0 when empty.
+ * numeric `rating` property. Returns 0 when empty.
  */
 export const averageRating = (reviews) => {
   if (!reviews || reviews.length === 0) return 0

@@ -6,16 +6,9 @@ import './SplashScreen.css'
  * SplashScreen — Full-bleed signature splash animation for Bore & Barrel
  * (Gunshop Asli Ngawi).
  *
- * Features:
- * - Dynamic rush & glow animation on logo
- * - Bullet trail, muzzle flash, glass crack SVG
- * - Interactive recoil/shake effect on click
- * - Auto-dismiss after 5.4s with smooth fade-out
- * - Skip / Enter Armory button
- *
- * @param {Object} props
+ * @param {Object}   props
  * @param {Function} [props.onFinish] - Callback when splash finishes / is dismissed
- * @param {number} [props.duration=5400] - Duration in ms before auto-fading
+ * @param {number}   [props.duration=5400] - Duration in ms before auto-fading
  */
 export default function SplashScreen({ onFinish, duration = 5400 }) {
   const [isHit, setIsHit] = useState(false)
@@ -33,9 +26,7 @@ export default function SplashScreen({ onFinish, duration = 5400 }) {
 
   // Interactive recoil on tap/click
   const handleHit = (e) => {
-    // If user clicked the skip button, let that handler run instead
     if (e.target.closest('.splash-skip-btn')) return
-
     setIsHit(false)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -57,7 +48,6 @@ export default function SplashScreen({ onFinish, duration = 5400 }) {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-
     return () => {
       clearTimeout(timer)
       window.removeEventListener('keydown', handleKeyDown)

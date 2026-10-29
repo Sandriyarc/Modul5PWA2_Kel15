@@ -36,7 +36,10 @@ export const normalizeProduct = (item) => {
   const stepsList =
     Array.isArray(item.steps) && item.steps.length > 0
       ? item.steps
-      : ['Verify firearm is completely unloaded and point in safe direction.', 'Inspect receiver and mechanism for maintenance.']
+      : [
+          'Verify firearm is completely unloaded and point in safe direction.',
+          'Inspect receiver and mechanism for maintenance.',
+        ]
 
   return {
     ...item,
@@ -66,30 +69,24 @@ class GunService {
   async getGuns(params = {}) {
     if (IS_SUPABASE) {
       const queryParts = ['select=*']
-
       if (params.search) {
         queryParts.push(`name=ilike.*${encodeURIComponent(params.search)}*`)
       }
-
       if (params.category && params.category !== 'All') {
         queryParts.push(`type=eq.${encodeURIComponent(params.category)}`)
       }
-
       if (params.sort_by) {
         const order = params.order === 'desc' ? 'desc' : 'asc'
         queryParts.push(`order=${encodeURIComponent(params.sort_by)}.${order}`)
       } else {
         queryParts.push('order=created_at.desc')
       }
-
       if (params.limit) {
         queryParts.push(`limit=${params.limit}`)
       }
-
       const queryString = queryParts.join('&')
       const data = await apiClient.get(`/rest/v1/products?${queryString}`)
       const list = Array.isArray(data) ? data.map(normalizeProduct) : []
-
       return {
         success: true,
         data: list,
@@ -132,7 +129,6 @@ class GunService {
         : Array.isArray(data.specs)
         ? data.specs
         : []
-
       const payload = {
         name: data.name,
         type: data.type || (data.category === 'minuman' ? 'Rifle' : 'Pistol'),
@@ -142,7 +138,6 @@ class GunService {
         specs: specsArray,
         image_url: data.image_url || null,
       }
-
       const res = await apiClient.post('/rest/v1/products', payload, {
         headers: { Prefer: 'return=representation' },
       })
@@ -162,7 +157,6 @@ class GunService {
         : Array.isArray(data.specs)
         ? data.specs
         : undefined
-
       const payload = {
         updated_at: new Date().toISOString(),
       }
@@ -175,7 +169,6 @@ class GunService {
       if (data.description !== undefined) payload.description = data.description
       if (specsArray !== undefined) payload.specs = specsArray
       if (data.image_url !== undefined) payload.image_url = data.image_url
-
       const res = await apiClient.patch(`/rest/v1/products?id=eq.${id}`, payload, {
         headers: { Prefer: 'return=representation' },
       })
